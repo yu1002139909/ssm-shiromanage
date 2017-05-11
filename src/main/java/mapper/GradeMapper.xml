@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.GradeMapper">
+	<resultMap type="entity.Grade" id="gradeMapper" >
+		<id property="grade_id" column="grade_id"/>
+		<result property="grade_name" column="grade_name"/>
+		<result property="photo" column="photo"/>
+		<result property="year" column="year"/>
+		<association property="major"  resultMap="mapper.MajorMapper.majorMapper">
+		</association>
+		<collection property="studentList" ofType="entity.Student">
+		</collection>
+	</resultMap>
+	<insert id="add" parameterType="entity.Grade">
+		<selectKey keyProperty="grade_id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		INSERT  INTO grade (grade_id,grade_name,gmajor_id,photo,year) VALUES
+		(#{grade_id},#{grade_name},#{gmajor_id},#{photo},#{year})
+	</insert>
+	<update id="update" parameterType="entity.Grade">
+		update grade set grade_name =#{grade_name},gmajor_id =#{gmajor_id},photo = #{photo}, year=#{year}
+        WHERE grade_Id = #{grade_id}
+	</update>
+	<delete id="delete" parameterType="string">
+delete from grade
+        WHERE grade_Id = #{grade_id}
+	</delete>
+	<select id="getall" resultMap="gradeMapper">
+		SELECT *FROM grade g,major m WHERE g.gmajor_id = m.major_id
+	</select>
+	<select id="findById" parameterType="string" resultMap="gradeMapper">
+         SELECT * FROM grade g inner join major m
+		ON g.gmajor_id = m.major_Id and  g.grade_Id = #{grade_id}
+	</select>
+	<select id="findbyGradeMapperByMajorId" parameterType="string" resultMap="gradeMapper">
+	select * from grade g INNER JOIN major m on g.gmajor_id = #{gmajor_id}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

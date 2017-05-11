@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/jdbc
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="action"/>
+    <context:component-scan base-package="entity"/>
+    <context:component-scan base-package="service"/>
+    <!-- 配置C3P0连接池(即管理数据库连接) -->
+    <bean id="comboPooledDataSourceID" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/ssmdemo"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+    <!-- 配置SqlSessionFactoryBean(即替代MyBatisUtil工具类的作用) -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="comboPooledDataSourceID"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+
+    </bean>
+    <!--
+    MapperScannerConfigurer：mapper的扫描器，将包下边的mapper接口自动创建代理对象，
+    自动创建到spring容器中，bean的id是mapper的类名（首字母小写）
+     -->
+    <!-- 对dataSource 数据源进行事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="comboPooledDataSourceID"/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!-- 配置事务通知(即哪些方法需要事务) -->
+    <tx:advice id="tx" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- 配置事务切面(即哪些包中的类需要事务通知) -->
+    <aop:config>
+        <aop:pointcut id="serviceMethods" expression="execution(* service..*(..))"/>
+        <aop:advisor advice-ref="tx" pointcut-ref="serviceMethods"/>
+    </aop:config>
+    <!-- Cache配置 -->
+    <cache:annotation-driven cache-manager="cacheManager"/>
+    <bean id="ehCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+          p:configLocation="classpath:ehcache.xml"/>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
+          p:cacheManager-ref="ehCacheManagerFactory"/>
+
+    <!--可以用mapp替代  bean-->
+    <bean id = "majior" class="dao.MajorDaoImpl">
+      <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean id = "course" class="dao.CourseDaoImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定扫描的包名-->
+        <property name="basePackage" value="mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+</beans>
