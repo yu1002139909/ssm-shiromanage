@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -24,7 +24,7 @@
 	<p class="error-title"><i class="Hui-iconfont va-m" style="font-size:80px">&#xe688;</i>
 		<span class="va-m"> 404</span>
 	</p>
-	<p class="error-description">不好意思，您访问的页面不存在~</p>
+	<p class="error-description">不好意思，您访问没有权限访问，请联系管理员加权限~</p>
 	<p class="error-info">您可以：
 		<a href="javascript:;" onclick="history.go(-1)" class="c-primary">&lt; 返回上一页</a>
 		<span class="ml-20">|</span>
