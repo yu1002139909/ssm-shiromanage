@@ -11,11 +11,22 @@ import java.util.List;
  * @since 2014年6月10日 下午4:15:01
  **/
 public interface RoleService {
-    /**
-     * 通过用户id 查询用户 拥有的角色
-     * 
-     * @param userId
-     * @return
-     */
-    List<Role> selectRolesByUserId(Long userId);
+     /**@author yu
+      * @version 1.0
+      * @Date 2017/5/13
+      * 查询所有角色
+      */
+     List<Role> seletAllRole();
+     /**@author yu
+      * @version 1.0
+      * @Date 2017/5/16
+      *新增角色
+      */
+     void insert(Role role);
+     /**@author yu
+      * @version 1.0
+      * @Date 2017/5/16
+      *根据用户id查询角色
+      */
+     Role selectRolesByUserId(Long id);
 }

@@ -187,7 +187,7 @@ function layer_show(title,url,w,h){
 		title=false;
 	};
 	if (url == null || url == '') {
-		url="404.jsp";
+		url="500.jsp";
 	};
 	if (w == null || w == '') {
 		w=800;

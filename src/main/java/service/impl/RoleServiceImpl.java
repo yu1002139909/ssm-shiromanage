@@ -1,11 +1,11 @@
 package service.impl;
 
-import mapper.RoleMapper;
 import entity.Role;
-import service.RoleService;
+import mapper.RoleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import service.RoleService;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,12 +17,17 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    @Resource
+    @Autowired
     private RoleMapper roleMapper;
-
-
-    public List<Role> selectRolesByUserId(Long userId) {
-        return roleMapper.selectRolesByUserId(userId);
+    public List<Role> seletAllRole() {
+        return roleMapper.selectAllRole();
     }
 
+    public void insert(Role role) {
+        roleMapper.insert(role);
+    }
+
+    public Role selectRolesByUserId(Long id) {
+        return roleMapper.selectRolesByUserId(id);
+    }
 }

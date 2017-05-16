@@ -4,6 +4,7 @@ import entity.Course;
 import entity.Grade;
 import entity.Major;
 import entity.Student;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import security.RoleSign;
 import service.CourseService;
 import service.GradeService;
 import service.MajorServlice;
@@ -87,6 +89,7 @@ public class StudentAction {
     }
     //显示学生列表首页
     @RequestMapping(value = "student/stulist")
+    @RequiresRoles(value = RoleSign.JXXYADMIN)
     public String stulist(Model model){
         List<Student> studentList = studentService.getall();
         model.addAttribute("studentList",studentList);

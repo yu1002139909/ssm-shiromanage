@@ -9,7 +9,7 @@
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/user/login"/>
+        <property name="loginUrl" value="/page/login"/>
         <property name="successUrl" value="/index.jsp"/>
         <property name="unauthorizedUrl" value="/404.html"/>
         <property name="filterChainDefinitions">
@@ -57,7 +57,7 @@
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="org.apache.shiro.authz.UnauthorizedException">/404</prop>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">/401</prop>
             </props>
         </property>
     </bean>

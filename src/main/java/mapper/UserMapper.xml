@@ -101,9 +101,9 @@
     </delete>
     <insert id="insert" parameterType="entity.User">
         insert into user (id, username, password,
-        state, create_time)
+        state, role_id ,create_time)
         values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
-        #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+        #{state,jdbcType=VARCHAR}, #{role_id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="entity.User">
         insert into user

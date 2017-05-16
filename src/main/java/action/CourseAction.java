@@ -1,7 +1,7 @@
 package action;
 
 import entity.Course;
-import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ public class CourseAction {
     }
 
     @RequestMapping("addCourse.action")
-    @RequiresRoles("admin")
+    @RequiresPermissions(value = "user:create")
     public String add(Course course){
                  courseService.add(course);
         return"forward:/courselist.action";
@@ -38,6 +38,7 @@ public class CourseAction {
     }
     //删除学院操作
     @RequestMapping("delete.action")
+
     public String delete(String id){
         System.out.println(id);
         courseService.delete(id);

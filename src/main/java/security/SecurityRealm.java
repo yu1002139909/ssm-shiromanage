@@ -1,12 +1,7 @@
 package security;
 
-import entity.Permission;
 import entity.Role;
 import entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import service.PermissionService;
-import service.RoleService;
-import service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,10 +10,13 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import service.PermissionService;
+import service.RoleService;
+import service.UserService;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 用户身份验证,授权 Realm 组件
@@ -61,21 +59,13 @@ public class SecurityRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String username = String.valueOf(principals.getPrimaryPrincipal());
 
-        final User user = userService.selectByUsername(username);
-        final List<Role> roleInfos = roleService.selectRolesByUserId(user.getId());
-        for (Role role : roleInfos) {
-            // 添加角色
-            System.err.println(role);
-            authorizationInfo.addRole(role.getRoleSign());
+       final User user = userService.selectByUsername(username);
+       Role roleInfos = roleService.selectRolesByUserId(user.getId());
 
-            final List<Permission> permissions = permissionService.selectPermissionsByRoleId(role.getId());
-            for (Permission permission : permissions) {
-                // 添加权限
-                System.err.println(permission);
-                authorizationInfo.addStringPermission(permission.getPermissionSign());
-            }
-        }
-        return authorizationInfo;
+            // 添加角色
+            System.err.println(roleInfos);
+            authorizationInfo.addRole(roleInfos.getRoleSign());
+      return authorizationInfo;
     }
     /**
      * 登录验证
@@ -93,5 +83,4 @@ public class SecurityRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, password, getName());
         return authenticationInfo;
     }
-
 }

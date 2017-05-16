@@ -1,5 +1,8 @@
 package security;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 角色标识配置类, <br>
  * 与 role_info 角色表中的 role_sign 字段 相对应 <br>
@@ -18,27 +21,35 @@ package security;
 public class RoleSign {
 
     /**
-     * 普通后台管理员 标识
+     *超级管理员 标识
      */
     public static final String ADMIN = "admin";
+    /**
+     * 信息学院标识
+     */
+    public static final String XXXYADMIN = "xxxyadmin";
 
     /**
-     * 客户经理 标识
+     * 财经学院标识
      */
-    public static final String CONSULTANT = "consultant";
+    public static final String CJXYADMIN = "cjxeadmin";
 
     /**
-     * VIP客户 标识
+     * 机械学院标识
      */
-    public static final String VIP_USER = "vip_user";
-
-    /**
-     * 商家 标识
-     */
-    public static final String MERCHANT = "merchant";
+    public static final String JXXYADMIN = "jxxyadmin";
 
     /**
      * 添加更多...
      */
+    //角色集合
+    public static Map<String,String> Rolesigin ;
 
+    static {
+        Rolesigin = new HashMap<String, String>();
+        Rolesigin.put(ADMIN,"超级管理员");
+        Rolesigin.put(XXXYADMIN,"信息学院管理员");
+        Rolesigin.put(CJXYADMIN,"财经学院管理员");
+        Rolesigin.put(JXXYADMIN,"机械学院管理员");
+    }
 }

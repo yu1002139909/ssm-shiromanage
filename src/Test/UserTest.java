@@ -4,8 +4,11 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import service.RoleService;
 import service.UserService;
 import util.MD5;
+
+import java.util.List;
 
 /**
  * @Author qq_emial1002139909@qq.com
@@ -17,6 +20,7 @@ public class UserTest {
     // 从spring容器中获取mapper代理对象
     UserService userService = context.getBean(UserService.class);
     UserMapper userMapper = context.getBean(UserMapper.class);
+    RoleService roleService = context.getBean(RoleService.class);
 
     @Test
     public void  findById(){
@@ -31,12 +35,18 @@ public class UserTest {
         User user = new User();
         user.setUsername("admin");
         user.setPassword("admin");
-        User user1 = userService.authentication(user);
-        System.out.println(user1);
+        userService.insert(user);
     }
+
     @Test
     public  void getall(){
+        List<User> roles = userService.selectAll();
+        System.out.println(roles.size());
+    }
+
+    @Test
+    public void select(){
         User user = userService.selectByUsername("admin");
-        System.out.println(user.getId());
+        System.out.println(user);
     }
 }
