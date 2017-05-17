@@ -12,7 +12,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import service.PermissionService;
 import service.RoleService;
 import service.UserService;
 
@@ -20,9 +19,6 @@ import javax.annotation.Resource;
 
 /**
  * 用户身份验证,授权 Realm 组件
- * 
- * @author StarZou
- * @since 2014年6月11日 上午11:35:28
  **/
 @Component(value = "securityRealm")
 public class SecurityRealm extends AuthorizingRealm {
@@ -33,20 +29,9 @@ public class SecurityRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     @Resource
     private RoleService roleService;
 
-    public void setPermissionService(PermissionService permissionService) {
-        this.permissionService = permissionService;
-    }
-
-    @Resource
-    private PermissionService permissionService;
 
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;

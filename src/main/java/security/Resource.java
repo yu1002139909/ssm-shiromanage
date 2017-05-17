@@ -2,9 +2,6 @@ package security;
 
 /**
  * 系统资源,模块
- * 
- * @author StarZou
- * @since 2014年6月17日 下午4:03:33
  **/
 public class Resource {
     /**
