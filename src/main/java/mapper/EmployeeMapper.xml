@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.EmployeeMapper">
+   <resultMap id="employeeMapper" type="entity.Employee">
+       <id property="empId" column="emp_id"/>
+       <result property="empName" column="emp_name"/>
+       <result property="photo" column="photo"/>
+       <result property="empGrade" column="emp_grade"/>
+       <result property="enterDate" column="enter_date"/>
+       <result property="photo" column="emp_photo"/>
+       <result property="overDate" column="over_date"/>
+       <association property="overDept"  javaType="entity.Dept">
+           <id property="deptId" column="dept_id"/>
+           <result property="deptName" column="dept_name"/>
+       </association>
+       <association property="enterDept"  javaType="entity.Dept">
+           <id property="deptId" column="dept_id"/>
+           <result property="deptName" column="dept_name"/>
+       </association>
+   </resultMap>
+    <insert id="add" parameterType="entity.Employee">
+        <selectKey keyProperty="empId" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+        INSERT into employee (emp_id,emp_name,emp_grade,enter_date,over_date,emp_photo,enter_dept_id,now_dept_Id,state)
+        VALUES
+        (#{empId},#{empName},#{empGrade},#{enterDate},#{overDate},#{photo},#{enterDeptId},#{overDeptId},#{state})
+    </insert>
+    <select id="getall" resultMap="employeeMapper">
+        SELECT *from employee e,depe d where e.enter_dept_id = d.dept_id
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+

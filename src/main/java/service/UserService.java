@@ -10,14 +10,14 @@ import java.util.List;
 public interface UserService  {
     /**
      * 用户验证
-     * 
+     *
      * @param user
      * @return
      */
     User authentication(User user);
     /**
      * 根据用户名查询用户
-     * 
+     *
      * @param username
      * @return
      */
@@ -26,11 +26,18 @@ public interface UserService  {
      * @version 1.0
      * @Date 2017/5/11
      */
-     void insert(User user);
-/**@author yu
- * @version 1.0
- * @Date 2017/5/12
- * 查询所有管理员
- */
-     List<User> selectAll();
+    void insert(User user);
+    /**@author yu
+     * @version 1.0
+     * @Date 2017/5/12
+     * 查询所有管理员
+     */
+    List<User> selectAll();
+    /**@author yu
+     * @version 1.0
+     * @Date 2017/5/19
+     *根据主键查询用户
+     */
+    User selectByPrimaryKey(Long id);
+
 }

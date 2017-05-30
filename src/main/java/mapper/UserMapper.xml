@@ -6,7 +6,9 @@
         <result column="username" property="username" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="CHAR" />
         <result column="state" property="state" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <association property="course"  resultMap="mapper.CourseMapper.courseMapper">
+        </association>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -84,10 +86,8 @@
         </if>
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List" />
-        from user
-        where id = #{id,jdbcType=BIGINT}
+        SELECT * FROM user u inner join course c
+        ON u.role_id = c.course_id and u.id = #{id}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from user
@@ -232,5 +232,10 @@
         <if test="orderByClause != null">
             order by ${orderByClause}
         </if>
+    </select>
+    <!--根据主键查询用户的详细信息-->
+    <select id="findByUserId" resultMap="BaseResultMap" parameterType="long">
+        SELECT * FROM user u inner join course c
+		ON u.role_id = c.course_id and u.id = #{id}
     </select>
 </mapper>

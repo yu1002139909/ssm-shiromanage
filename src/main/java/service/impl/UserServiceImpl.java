@@ -39,4 +39,8 @@ public class UserServiceImpl implements UserService {
         criteria.andIdIsNotNull();
         return userMapper.selectByExample(userExample);
     }
+
+    public User selectByPrimaryKey(Long id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
 }

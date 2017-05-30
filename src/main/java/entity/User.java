@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 用户模型
- * 
+ *
  * @author StarZou
  * @since 2014年7月5日 下午12:07:20
  **/
@@ -19,23 +19,23 @@ public class User {
 
     private Date createTime;
 
-    private Role role;
+    private  Course course;
 
-    private Long role_id;
+    private String role_id;//学院id
 
-    public Role getRole() {
-        return role;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public Long getRole_id() {
+    public String getRole_id() {
         return role_id;
     }
 
-    public void setRole_id(Long role_id) {
+    public void setRole_id(String role_id) {
         this.role_id = role_id;
     }
 

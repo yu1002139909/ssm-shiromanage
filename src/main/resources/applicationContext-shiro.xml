@@ -15,6 +15,7 @@
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源允许访问 -->
+                /common/**=anon
                 /image/** = anon
                 /lib/** = anon
                 /static/** = anon

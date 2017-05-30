@@ -1,19 +1,22 @@
 package entity;
 
+import java.util.List;
+
 /**
  * @Author qq_emial1002139909@qq.com
- * @Date 2017/5/2 17:07
+ * @Date 2017/5/2 12:41
  */
 public class Muen {
 
-    private String id;
-    private String name;
-    private String parentId;
-    private String url;
-    private String icon;
-    private String order;
-    private String isHeader;
-    private String childMenus;
+    public String id;
+    public String name;
+    public String parentId;
+    public String url;
+    public String icon;
+    public String order;
+    public String isHeader;
+    public List<ChildMenusBean> childMenus;
+
 
     public String getId() {
         return id;
@@ -71,11 +74,25 @@ public class Muen {
         this.isHeader = isHeader;
     }
 
-    public String getChildMenus() {
+    public List<ChildMenusBean> getChildMenus() {
         return childMenus;
     }
 
-    public void setChildMenus(String childMenus) {
+    public void setChildMenus(List<ChildMenusBean> childMenus) {
         this.childMenus = childMenus;
+    }
+
+    @Override
+    public String toString() {
+        return "Muen{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", url='" + url + '\'' +
+                ", icon='" + icon + '\'' +
+                ", order='" + order + '\'' +
+                ", isHeader='" + isHeader + '\'' +
+                ", childMenus=" + childMenus +
+                '}';
     }
 }

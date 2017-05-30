@@ -1,6 +1,5 @@
 package security;
 
-import entity.Role;
 import entity.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -12,25 +11,26 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import service.CourseService;
 import service.RoleService;
 import service.UserService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用户身份验证,授权 Realm 组件
  **/
 @Component(value = "securityRealm")
 public class SecurityRealm extends AuthorizingRealm {
-    @Override
-    public void setName(String name) {
-        super.setName("securityRealm");
-    }
-
     @Autowired
     private UserService userService;
     @Resource
     private RoleService roleService;
+    @Autowired
+    private CourseService courseService;
+
 
 
     public void setRoleService(RoleService roleService) {
@@ -44,13 +44,15 @@ public class SecurityRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String username = String.valueOf(principals.getPrimaryPrincipal());
 
-       final User user = userService.selectByUsername(username);
-       Role roleInfos = roleService.selectRolesByUserId(user.getId());
-
-            // 添加角色
-            System.err.println(roleInfos);
-            authorizationInfo.addRole(roleInfos.getRoleSign());
-      return authorizationInfo;
+        final User user = userService.selectByUsername(username);
+        // 添加角色
+        User user1 = userService.selectByPrimaryKey(user.getId());
+        System.out.println(user1.getCourse().getCourse_name());
+        List<String> roles = new ArrayList<String>();
+        roles.add(user1.getCourse().getCourse_id());
+        roles.add("admin1");
+        authorizationInfo.addRoles(roles);
+        return authorizationInfo;
     }
     /**
      * 登录验证
