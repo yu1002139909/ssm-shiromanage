@@ -61,14 +61,6 @@
           p:configLocation="classpath:ehcache.xml"/>
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
           p:cacheManager-ref="ehCacheManagerFactory"/>
-
-    <!--可以用mapp替代  bean-->
-    <bean id = "majior" class="dao.MajorDaoImpl">
-      <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-    </bean>
-    <bean id = "course" class="dao.CourseDaoImpl">
-        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-    </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定扫描的包名-->
         <property name="basePackage" value="mapper"/>
