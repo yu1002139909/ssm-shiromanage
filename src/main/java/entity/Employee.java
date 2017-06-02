@@ -1,5 +1,7 @@
 package entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -10,7 +12,9 @@ public class Employee {
     private String empId; //职工id
     private String empName;//职工姓名
     private String empGrade;//职工性别
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date  enterDate; //开始工作时间
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date  overDate;//结束工作时间
     private Dept enterDept; //开始工作部门
     private String enterDeptId;//开始工作部门id
@@ -105,5 +109,22 @@ public class Employee {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "empId='" + empId + '\'' +
+                ", empName='" + empName + '\'' +
+                ", empGrade='" + empGrade + '\'' +
+                ", enterDate=" + enterDate +
+                ", overDate=" + overDate +
+                ", enterDept=" + enterDept +
+                ", enterDeptId='" + enterDeptId + '\'' +
+                ", overDeptId='" + overDeptId + '\'' +
+                ", overDept=" + overDept +
+                ", photo='" + photo + '\'' +
+                ", state='" + state + '\'' +
+                '}';
     }
 }

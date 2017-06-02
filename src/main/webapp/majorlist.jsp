@@ -21,9 +21,10 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
-	<title>用户管理</title>
+	<title>专业列表</title>
 </head>
 <body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c"> 日期范围：
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
@@ -154,6 +155,7 @@
                 url: '${pageContext.request.contextPath}/major/delete?id='+id,
                 success: function(data){
                     $(obj).parents("tr").remove();
+                    document.getElementById("alink").click();
                     layer.msg('已删除!',{icon:1,time:1000});
                 },
                 error:function(data) {

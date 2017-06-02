@@ -75,13 +75,13 @@ public class MeunAction {
        ChildMenusBean deptChildMenu  = new ChildMenusBean();
        deptChildMenu.setParentId(deptMuen.getId());
        deptChildMenu.setIsHeader("");
-       deptChildMenu.setUrl("");
+       deptChildMenu.setUrl("emp/list?dept_id="+dept.getDeptId());
        deptChildMenu.setName(dept.getDeptName());
        deptChildMenu.setId(dept.getDeptId());
        deptChildMenu.setIcon("&#xe609");
        depteMuens.add(deptChildMenu);
     }
-      deptMuen.setChildMenus(depteMuens);
+    deptMuen.setChildMenus(depteMuens);
     Muen adminMuen = new Muen();//管理员菜单
     adminMuen.setId("3");
     adminMuen.setIcon("");

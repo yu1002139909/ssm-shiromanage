@@ -31,7 +31,7 @@
 </head>
 <body>
 <article class="page-container">
-	<form action="${pageContext.request.contextPath}/major/add.action" method="post" class="form form-horizontal" id="form-member-add">
+	<form class="form form-horizontal" id="form-member-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>专业名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -104,12 +104,20 @@ $(function(){
 		onkeyup:false,
 		focusCleanup:true,
 		success:"valid",
-		n:function(form){
+        submitHandler:function(form){
+            $(form).ajaxSubmit({
+                type: 'post',
+                url: "${pageContext.request.contextPath}/major/add" ,
+                success: function(data){
+                    layer.msg('添加成功!',{icon:1,time:1000});
+                    parent.layer.close(index);
+                },
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.msg('添加失败!',{icon:2,time:1000});
+                }
+            });
 
-			var index = parent.layer.getFrameIndex(window.name);
-			//parent.$('.btn-refresh').click();
-			parent.layer.close(index);
-		}
+        }
 	});
 });
 </script> 

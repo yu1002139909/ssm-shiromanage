@@ -31,7 +31,4 @@ function ajax(url, param, datat, callback) {
 			alert("失败.."); 
 		}
 	});  
-}
-$(document).ready(function(){
-
-});
+}  

@@ -14,4 +14,5 @@ public interface StudentService {
     public void delete(String grade_id);
     public void update(Student studnet);
     public Student findById(String grade_id);
+    public List<Student> findByGradeId(String grade_id);
 }

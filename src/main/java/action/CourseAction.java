@@ -1,7 +1,6 @@
 package action;
 
 import entity.Course;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +22,10 @@ public class CourseAction {
     }
 
     @RequestMapping("addCourse.action")
-    @RequiresPermissions(value = "user:create")
     public String add(Course course){
-                 courseService.add(course);
+        courseService.add(course);
         return"forward:/courselist.action";
-  }
+    }
     @RequestMapping("courselist.action")
     public String list(Model model){
         List<Course> all = courseService.getAll();
@@ -38,7 +36,6 @@ public class CourseAction {
     }
     //删除学院操作
     @RequestMapping("delete.action")
-
     public String delete(String id){
         System.out.println(id);
         courseService.delete(id);
@@ -51,7 +48,7 @@ public class CourseAction {
         System.out.println(id);
         Course course = courseService.findById(id);
         model.addAttribute("course",course);
-            return "course-update";
+        return "course-update";
     }
     //修改学院信息的具体操作
     @RequestMapping("/course/update")

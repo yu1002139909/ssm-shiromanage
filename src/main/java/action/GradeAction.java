@@ -3,6 +3,7 @@ package action;
 import entity.Course;
 import entity.Grade;
 import entity.Major;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import service.CourseService;
 import service.GradeService;
 import service.MajorServlice;
-import service.impl.GradeServiceImpl;
+import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -27,26 +28,18 @@ import java.util.*;
  */
 @Controller
 public class GradeAction {
-  @Autowired
-    private GradeService gradeService;
-    public void setGradeService(GradeServiceImpl gradeService) {
-        this.gradeService = gradeService;
-    }
     @Autowired
-     private CourseService courseService;
-     public void setGradeService(GradeService gradeService) {
-        this.gradeService = gradeService;
-    }
+    private GradeService gradeService;
+    @Autowired
+    private CourseService courseService;
     @Autowired
     private MajorServlice majorServlice;
-
-    public void setMajorServlice(MajorServlice majorServlice) {
-        this.majorServlice = majorServlice;
-    }
+    @Autowired
+    UserService userService;
 
     @RequestMapping("grade/add")
     public String add(Grade grade ,@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
-       //获取webapp的物理路劲
+        //获取webapp的物理路劲
         String pathRoot = request.getSession().getServletContext().getRealPath("");
         String path="";
         System.out.println("文件上传");
@@ -65,13 +58,21 @@ public class GradeAction {
         gradeService.add(grade);
         return "index";
     }
+
+
     @RequestMapping("grade/addUi")
-    public  String addUi(Model model, String course_id){
-        List<Course> courseList = courseService.getAll();
+    public  String addUi(Model model, String course_id,HttpServletRequest request){
         System.out.println(course_id);
-        model.addAttribute("courseList",courseList);
-        List<Major> majorList = majorServlice.findbymajorByCouserId(course_id);
-        model.addAttribute("majorList",majorList);
+        List<Course> courseList = courseService.getAll();
+        User userInfo = (User)request.getSession().getAttribute("userInfo");
+        //通过UserId查询所属学院
+        User user = userService.selectByPrimaryKey(userInfo.getId());
+        if(true){
+            model.addAttribute("courseList",courseList);
+            List<Major> majorList = majorServlice.findbymajorByCouserId(course_id);
+            model.addAttribute("majorList",majorList);
+            return "grade-add";
+        }
         return "grade-add";
     }
     @RequestMapping("grade/getMajor")
@@ -93,8 +94,14 @@ public class GradeAction {
         return jsonMap;
     }
     @RequestMapping(value = "grade/list")
-    public String  list(Model model){
-        List<Grade> gradeList = gradeService.getall();
+    public String  list(Model model,String majorid){
+        System.out.println(majorid);
+        List<Grade> gradeList = gradeService.findbyGradeMapperByMajorId(majorid);
+        //根据专业查询学院Id
+        Major major = majorServlice.findById(majorid);
+        String course_id = major.getMcourse_id();
+        System.out.println(course_id);
+        model.addAttribute("course_id",course_id);
         model.addAttribute("gradeList",gradeList);
         return"gradelist";
     }

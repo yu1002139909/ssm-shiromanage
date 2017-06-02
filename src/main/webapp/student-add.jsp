@@ -24,11 +24,9 @@
 	<![endif]-->
 	<!--/meta 作为公共模版分离出去-->
 
-	<title>添加学生 - H-ui.admin 3.0</title>
-	<meta name="keywords" content="H-ui.admin 3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-	<meta name="description" content="H-ui.admin 3.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+	<title>新增学生</title>
 </head>
-<form action="${pageContext.request.contextPath}/student/add" method="post" class="form form-horizontal" id="form-member-add"  enctype="multipart/form-data" onsubmit="return validate_form(this)">
+<form id="form-member-add"  class="form form-horizontal"   enctype="multipart/form-data" onsubmit="return validate_form(this)">
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学生姓名：</label>
 		<div class="formControls col-xs-8 col-sm-9">
@@ -55,7 +53,11 @@
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">照片：</label>
-		<input type="file" name="file"/>
+		<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
+				<input class="input-text upload-url" type="text" name="file" id="uploadfile" readonly nullmsg="请添加附件！" style="width:200px">
+				<a href="" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+				<input type="file" multiple name="file" class="input-file">
+				</span> </div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">所属学院：</label>
@@ -64,7 +66,7 @@
 					 <option value="">请选择</option>
 					<c:forEach var="course" items="${requestScope.courseList}">
 					  <option value="${course.course_id}" name="">
-						  ${course.course_name}
+							  ${course.course_name}
 					  </option>
 					</c:forEach>
 				</select>
@@ -98,7 +100,6 @@
 		</div>
 	</div>
 </form>
-
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/layer/2.4/layer.js"></script>
@@ -107,7 +108,6 @@
 <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/datepicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/validate-methods.js"></script>
@@ -149,11 +149,18 @@
             onkeyup:false,
             focusCleanup:true,
             success:"valid",
-            s:function(form){
-                var index = parent.layer.getFrameIndex(window.name);
-                //parent.$('.btn-refresh').click();
-                parent.layer.close(index);
-                //$(form).ajaxSubmit();
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: '${pageContext.request.contextPath}/student/add',
+                    success: function(data){
+                        layer.msg('添加成功!',{icon:1,time:1000});
+                        parent.layer.close(index);
+                    },
+                    error: function(XmlHttpRequest, textStatus, errorThrown){
+                        layer.msg('添加失败!',{icon:2,time:1000});
+                    }
+                });
 
             }
         });
@@ -193,7 +200,7 @@
         var major=document.getElementById("major");
         var grade=document.getElementById("grade");
 
-       if(couse.value == ""){
+        if(couse.value == ""){
             alert("学院不能为空！");
             couse.focus();
             return false;

@@ -36,7 +36,8 @@ delete from grade
 		ON g.gmajor_id = m.major_Id and  g.grade_Id = #{grade_id}
 	</select>
 	<select id="findbyGradeMapperByMajorId" parameterType="string" resultMap="gradeMapper">
-	select * from grade g INNER JOIN major m on g.gmajor_id = #{gmajor_id}
+	 select * from grade g INNER JOIN major m on g.gmajor_id = #{gmajor_id}
+	 where major_Id = #{gmajor_id}
 	</select>
 </mapper>
 

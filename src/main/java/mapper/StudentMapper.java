@@ -14,4 +14,5 @@ public interface StudentMapper {
     public void delete(String id);
     public void update(Student studnet);
     public Student findById(String id);
+    public List<Student> findByGradeId(String grade_id);
 }

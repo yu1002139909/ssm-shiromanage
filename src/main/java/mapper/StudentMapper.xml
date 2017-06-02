@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.StudentMapper">
-   <resultMap id="studentMapper" type="entity.Student">
-       <id property="id" column="id"/>
-       <result property="qq" column="qq"/>
-       <result property="photo" column="photo"/>
-       <result property="company" column="company"/>
-       <result property="name" column="name"/>
-       <result property="tel" column="tel"/>
-       <association property="grade" resultMap="mapper.GradeMapper.gradeMapper"/>
-       <association property="course" resultMap="mapper.CourseMapper.courseMapper"/>
-   </resultMap>
+    <resultMap id="studentMapper" type="entity.Student">
+        <id property="id" column="id"/>
+        <result property="qq" column="qq"/>
+        <result property="photo" column="photo"/>
+        <result property="company" column="company"/>
+        <result property="name" column="name"/>
+        <result property="tel" column="tel"/>
+        <association property="grade" resultMap="mapper.GradeMapper.gradeMapper"/>
+        <association property="course" resultMap="mapper.CourseMapper.courseMapper"/>
+        <association property="major" resultMap="mapper.MajorMapper.majorMapper"/>
+    </resultMap>
     <insert id="add" parameterType="entity.Student">
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select replace(uuid(),'-','') from dual
         </selectKey>
-      INSERT INTO student (id,tel,name,photo,sgrade_id,qq,scourse_id,company)
-      VALUES(#{id},#{tel},#{name},#{photo},#{sgrade_id},#{qq},#{scourse_id},#{company})
+        INSERT INTO student (id,tel,name,photo,sgrade_id,qq,scourse_id,company)
+        VALUES(#{id},#{tel},#{name},#{photo},#{sgrade_id},#{qq},#{scourse_id},#{company})
     </insert>
     <update id="update" parameterType="entity.Student">
          UPDATE  student set tel =#{tel},name=#{name},photo=#{photo},sgrade_id=#{sgrade_id},
@@ -34,7 +35,13 @@
     <select id="findById" resultMap="studentMapper" parameterType="string">
    SELECT * FROM student s inner join course c
 		ON s.scourse_id = c.course_id JOIN grade g ON g.grade_Id = s.sgrade_Id AND
-    s.id=#{id}
+        s.id=#{id}
+    </select>
+    <select id="findByGradeId" resultMap="studentMapper" parameterType="string">
+        		select * from student s
+        		INNER JOIN grade g on s.sgrade_Id=
+        		 #{sgrade_Id}
+                where grade_Id= #{sgrade_Id}
     </select>
 </mapper>
 

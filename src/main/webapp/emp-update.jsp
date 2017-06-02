@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -24,59 +25,103 @@
 	<![endif]-->
 	<!--/meta 作为公共模版分离出去-->
 
-	<title>添加班级</title>
+	<title>新增职工</title>
 </head>
-<form  class="form form-horizontal" id="form-member-add"  enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/emp/update?empId=${employee.empId}" method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>班级编号：</label>
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职工姓名：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="grade_name" name="grade_name">
+			<input type="text" class="input-text" value="${employee.empName}" placeholder="" id="name" name="empName">
+		</div>
+	</div>
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<div class="radio-box">
+				<input name="empGrade" type="radio" id="sex-1"  value="男" ${employee.empGrade=='男'?'checked':'' }>
+				<label>男</label>
+			</div>
+			<div class="radio-box">
+				<input name="empGrade" type="radio" value="女" ${employee.empGrade=='女'?'checked':'' }>
+				<label>女</label>
+			</div>
 		</div>
 	</div>
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>入学年份：</label>
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>照片：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="grade_year" name="year" onfocus="WdatePicker({'dateFmt':'yyyy'})">
+			<img src="${pageContext.request.contextPath}/${employee.photo}">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">照片：</label>
 		<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
 				<input class="input-text upload-url" type="text" name="file" id="uploadfile" readonly nullmsg="请添加附件！" style="width:200px">
-				<a href="" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+				<a href="${employee.photo}" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
 				<input type="file" multiple name="file" class="input-file">
 				</span> </div>
 	</div>
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3">所属学院：</label>
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>入职时间：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+
+			<input type="text" class="input-text" value="<fmt:formatDate value="${employee.enterDate}" pattern="yyyy-MM-dd"/>" placeholder=""name="enterDate" onfocus="WdatePicker({'dateFmt':'yyyy-MM-dd'})">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">入职部门：</label>
 		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				 <select class="select" size="1"  name="mcourse_id" id="orgId" onchange="test();">
-					<option value="">--请选择学院--</option>
-					 <c:forEach var="course" items="${requestScope.courseList}">
-						<option value="${course.course_id}" name="">
-						  ${course.course_name}
-						</option>
+				 <select class="select" size="1"  name="enterDeptId" id="orgId">
+					 <option value="${employee.enterDept.deptId}">${employee.enterDept.deptName}</option>
+					<c:forEach var="dept" items="${requestScope.deptList}">
+					  <option value="${dept.deptId}" name="">
+							  ${dept.deptName}
+					  </option>
 					</c:forEach>
 				</select>
 				</span> </div>
 	</div>
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3">所属专业：</label>
-		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				 <select class="select" size="1"  name="gmajor_id" id="major" >
-					  <option value="" name="gmajor_id">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>退休时间：</label>
+		<div class="formControls col-xs-8 col-sm-9">
 
+			<input type="text" class="input-text" value="<fmt:formatDate value="${employee.overDate}" pattern="yyyy-MM-dd"/>" placeholder=""name="overDate" onfocus="WdatePicker({'dateFmt':'yyyy-MM-dd'})">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">退休/在职部门：</label>
+		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				 <select class="select" size="1"  name="overDeptId" >
+					 <option value="${employee.overDept.deptId}">${employee.overDept.deptName}</option>
+					<c:forEach var="dept" items="${requestScope.deptList}">
+					  <option value="${dept.deptId}" name="">
+							  ${dept.deptName}
 					  </option>
+					</c:forEach>
 				</select>
 				</span> </div>
 	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>在职状态：</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<div class="radio-box">
+				<input name="state" type="radio"   value="在职" ${employee.state=='在职'?'checked':''}>
+				<label for="sex-1">在职</label>
+			</div>
+			<div class="radio-box">
+				<input type="radio" id="" name="state" value="退休" ${employee.state=='退休'?'checked':''} >
+				<label >退休</label>
+			</div>
+		</div>
+	</div>
+
 	<div class="row cl">
 		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 		</div>
 	</div>
 </form>
-
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/layer/2.4/layer.js"></script>
@@ -85,76 +130,9 @@
 <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="${pageContext.request.contextPath}/datepicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript">
-    $(function(){
-        $('.skin-minimal input').iCheck({
-            checkboxClass: 'icheckbox-blue',
-            radioClass: 'iradio-blue',
-            increaseArea: '20%'
-        });
-
-        $("#form-member-add").validate({
-            rules:{
-                course_name:{
-                    required:true,
-                    minlength:1,
-                    maxlength:16
-                },
-                sex:{
-                    required:true,
-                },
-                mobile:{
-                    required:true,
-                    isMobile:true,
-                },
-                email:{
-                    required:true,
-                    email:true,
-                },
-                uploadfile:{
-                    required:true,
-                },
-
-            },
-            onkeyup:false,
-            focusCleanup:true,
-            success:"valid",
-            submitHandler:function(form){
-                $(form).ajaxSubmit({
-                    type: 'post',
-                    url: "${pageContext.request.contextPath}/grade/add.action" ,
-                    success: function(data){
-                        layer.msg('添加成功!',{icon:1,time:1000});
-                        parent.layer.close(index);
-                    },
-                    error: function(XmlHttpRequest, textStatus, errorThrown){
-                        layer.msg('添加失败!',{icon:2,time:1000});
-                    }
-                });
-
-            }
-        });
-    });
-    function test () {
-        var wen =  $("#orgId").val();
-        $.ajax({
-            url: '${pageContext.request.contextPath}/grade/getMajor?course_id='+wen,
-            type: "post",
-            async: false,//非异步
-            success:function (msg) {
-                $("#major").empty();
-                $("#major").append("<option value=''>----选择专业----</option>");
-                $.each(msg.tasks,function(index,item){
-                    $("#major").append( "<option value='"+item.major_id+"'>"+item.major_name+"</option>");
-                });
-            }
-        });
-    }
-</script>
 </body>
 </html>

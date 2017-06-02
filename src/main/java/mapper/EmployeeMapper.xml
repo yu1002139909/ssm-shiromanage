@@ -9,15 +9,19 @@
        <result property="photo" column="photo"/>
        <result property="empGrade" column="emp_grade"/>
        <result property="enterDate" column="enter_date"/>
+       <result property="enterDeptId" column="enter_dept_id"/>
        <result property="photo" column="emp_photo"/>
        <result property="overDate" column="over_date"/>
-       <association property="overDept"  javaType="entity.Dept">
-           <id property="deptId" column="dept_id"/>
-           <result property="deptName" column="dept_name"/>
+       <result property="overDeptId" column="now_dept_id"/>
+       <result property="state" column="state"/>
+
+       <association property="overDept"  javaType="entity.Dept" column="now_dept_id">
+           <id property="deptId" column="newId"/>
+           <result property="deptName" column="newDepName"/>
        </association>
-       <association property="enterDept"  javaType="entity.Dept">
-           <id property="deptId" column="dept_id"/>
-           <result property="deptName" column="dept_name"/>
+       <association property="enterDept"  javaType="entity.Dept" column="enter_dept_id" >
+           <id property="deptId" column="oldId"/>
+           <result property="deptName" column="oldDepName"/>
        </association>
    </resultMap>
     <insert id="add" parameterType="entity.Employee">
@@ -28,8 +32,25 @@
         VALUES
         (#{empId},#{empName},#{empGrade},#{enterDate},#{overDate},#{photo},#{enterDeptId},#{overDeptId},#{state})
     </insert>
+    <update id="update" parameterType="entity.Employee">
+        UPDATE employee SET emp_name=#{empName},emp_grade=#{empGrade},enter_date=#{enterDate},over_date=#{overDate},emp_photo=#{photo},enter_dept_id=#{enterDeptId},now_dept_Id=#{overDeptId},state=#{state}
+        where emp_id = #{empId}
+    </update>
+    <delete id="delete" parameterType="string">
+         DELETE FROM employee WHERE  emp_id = #{empId}
+    </delete>
     <select id="getall" resultMap="employeeMapper">
-        SELECT *from employee e,depe d where e.enter_dept_id = d.dept_id
+        SELECT *  from employee e,dept d where e.enter_dept_id = d.dept_id AND e.now_dept_id = d.dept_id
+    </select>
+    <select id="findById" resultMap="employeeMapper" parameterType="string">
+    SELECT e.*, enddept.dept_id as oldId, enddept.dept_name as oldDepName,overdept.dept_id as newId,overdept.dept_name as newDepName FROM employee e inner join dept enddept
+    ON e.enter_dept_id = enddept.dept_id JOIN dept overdept ON overdept.dept_id =e.now_dept_Id AND
+    e.emp_id=#{empId}
+    </select>
+    <select id="findbyEmployeeByDepeId" resultMap="employeeMapper" parameterType="string">
+                 SELECT e.*, enddept.dept_id as oldId, enddept.dept_name as oldDepName,overdept.dept_id as newId,overdept.dept_name as newDepName FROM employee e inner join dept enddept
+                 ON e.enter_dept_id = enddept.dept_id JOIN dept overdept ON overdept.dept_id =e.now_dept_Id AND
+                 e.now_dept_id=#{enterDeptId}
     </select>
 </mapper>
 

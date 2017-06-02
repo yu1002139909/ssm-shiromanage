@@ -4,7 +4,6 @@ import entity.Course;
 import entity.Grade;
 import entity.Major;
 import entity.Student;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import security.RoleSign;
 import service.CourseService;
 import service.GradeService;
 import service.MajorServlice;
@@ -57,7 +55,6 @@ public class StudentAction {
     public void setMajorServlice(MajorServlice majorServlice) {
         this.majorServlice = majorServlice;
     }
-
     //获取增加学生页面
     @RequestMapping(value = "student/addUi")
     public String addUi(Model model) {
@@ -68,7 +65,7 @@ public class StudentAction {
     //增加学生的具体操作
     @RequestMapping(value = "student/add",method = RequestMethod.POST)
     public String add(Student student, @RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
-    //获取webapp的物理路劲
+        //获取webapp的物理路劲
         String pathRoot = request.getSession().getServletContext().getRealPath("");
         String path="";
         System.out.println("文件上传");
@@ -89,9 +86,8 @@ public class StudentAction {
     }
     //显示学生列表首页
     @RequestMapping(value = "student/stulist")
-    @RequiresRoles(value = RoleSign.JXXYADMIN)
-    public String stulist(Model model){
-        List<Student> studentList = studentService.getall();
+    public String stulist(Model model,String grade_id ){
+        List<Student> studentList = studentService.findByGradeId(grade_id);
         model.addAttribute("studentList",studentList);
         return "studentlist";
     }

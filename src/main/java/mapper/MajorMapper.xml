@@ -34,6 +34,7 @@
 	<!-- 查询学院有什么专业-->
 	<select id="findbymajorByCouserId" parameterType="string" resultMap="majorMapper">
 		select * from major m INNER JOIN course c on m.mcourse_id = #{couser_id}
+		where c.course_id=#{corse_id}
 	</select>
 
 </mapper>

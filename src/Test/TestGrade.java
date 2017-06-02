@@ -1,4 +1,5 @@
 import entity.Grade;
+import entity.Major;
 import mapper.GradeMapper;
 import mapper.MajorMapper;
 import org.junit.Test;
@@ -43,6 +44,13 @@ public class TestGrade {
         List<Grade> grades = gradeMapper.findbyGradeMapperByMajorId("de6ab1fc8518103580d7e7d881007961");
         for (Grade grade: grades){
             System.out.println(grade.getGrade_name());
+        }
+    }
+    @Test
+    public void getallmajor(){
+        List<Major> majorList = majorMapper.findbymajorByCouserId("555774c082b6103594d0392f41b8d916");
+        for (Major major:majorList){
+            System.out.println(major.getCourse().getCourse_name());
         }
     }
 }

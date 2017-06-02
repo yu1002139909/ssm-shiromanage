@@ -40,9 +40,9 @@ public class StudentTest {
     }
     @Test
     public void getall(){
-        List<Student> studentList = studentService.getall();
-        for (Student student :studentList){
-            System.out.println(student.getGrade().getMajor().getMajor_id());
+        List<Student> studentList = studentService.findByGradeId("40ac5cf58dc21035914c43d563710be4");
+        for (Student student:studentList){
+            System.out.println(student.getGrade().getMajor());
         }
     }
     @Test

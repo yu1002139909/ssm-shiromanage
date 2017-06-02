@@ -32,14 +32,18 @@ public class StudentServiceImpl implements StudentService {
     }
     //删除学生
     public void delete(String stuid) {
-         studentMapper.delete(stuid);
+        studentMapper.delete(stuid);
     }
 
     public void update(Student studnet) {
-      studentMapper.update(studnet);
+        studentMapper.update(studnet);
     }
-
+    //通过主键查询学生信息
     public Student findById(String id) {
         return studentMapper.findById(id);
+    }
+    //查询班级下有哪些学生
+    public List<Student> findByGradeId(String grade_id) {
+        return studentMapper.findByGradeId(grade_id);
     }
 }
