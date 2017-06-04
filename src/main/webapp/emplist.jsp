@@ -43,6 +43,7 @@
 				<th width="50">ID</th>
 				<th width="50">姓名</th>
 				<th width="100">性别</th>
+				<th width="100">照片</th>
 				<th width="100">入职时间</th>
 				<th width="120">入职部门</th>
 				<th width="70">目前/退休部门</th>
@@ -58,6 +59,7 @@
 					<td>${varSta.count}</td>
 					<td id="name">${emp.empName}</td>
 					<td id="empGrade">${emp.empGrade}</td>
+					<td id="photo"><img src="${pageContext.request.contextPath}/${emp.photo}" width="40px" height="40px"></td>
 					<td>
 						<fmt:formatDate value="${emp.enterDate}" pattern="yyyy年MM月dd日"/></td>
 					<td id="enterDept">${emp.enterDept.deptName}</td>

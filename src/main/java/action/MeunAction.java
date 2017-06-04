@@ -52,6 +52,7 @@ public class MeunAction {
     List<ChildMenusBean> coursemMuens = new ArrayList<ChildMenusBean>();//学院
     List<ChildMenusBean> menusBeans = new ArrayList<ChildMenusBean>();//管理员列表
     List<ChildMenusBean> depteMuens = new ArrayList<ChildMenusBean>(); //部门菜单显示
+    List<ChildMenusBean> lederMuens = new ArrayList<ChildMenusBean>();//领导菜单
     Muen muen = new Muen();//校友系统菜单
     muen.setId("1");
     muen.setIsHeader("1");
@@ -60,6 +61,7 @@ public class MeunAction {
     muen.setIcon("");
     muen.setName("校友系统");
     muen.setParentId("0");
+
     Muen deptMuen = new Muen();//教职工系统
 
     deptMuen.setId("2");
@@ -82,6 +84,33 @@ public class MeunAction {
        depteMuens.add(deptChildMenu);
     }
     deptMuen.setChildMenus(depteMuens);
+
+    //领导菜单
+    Muen leaderMuen = new Muen();
+    leaderMuen.setId("3");
+    leaderMuen.setIcon("");
+    leaderMuen.setIsHeader("1");
+    leaderMuen.setOrder("2");
+    leaderMuen.setUrl("");
+    leaderMuen.setName("领导管理");
+    leaderMuen.setParentId("0");
+    ChildMenusBean incumbencyLeaderChildMenusBean = new ChildMenusBean();
+    incumbencyLeaderChildMenusBean.setId("1");
+    incumbencyLeaderChildMenusBean.setIcon("&#xe609");
+    incumbencyLeaderChildMenusBean.setParentId("3");
+    incumbencyLeaderChildMenusBean.setName("在职领导");
+    incumbencyLeaderChildMenusBean.setUrl("leader/job?state=true");
+    ChildMenusBean quitLeaderChildMenusBean = new ChildMenusBean();
+    quitLeaderChildMenusBean.setId("2");
+    quitLeaderChildMenusBean.setIcon("&#xe609");
+    quitLeaderChildMenusBean.setParentId("3");
+    quitLeaderChildMenusBean.setName("历任领导");
+    quitLeaderChildMenusBean.setOrder("");
+    quitLeaderChildMenusBean.setUrl("leader/job?state=false");
+    lederMuens.add(incumbencyLeaderChildMenusBean);
+    lederMuens.add(quitLeaderChildMenusBean);
+    leaderMuen.setChildMenus(lederMuens);
+
     Muen adminMuen = new Muen();//管理员菜单
     adminMuen.setId("3");
     adminMuen.setIcon("");
@@ -136,6 +165,7 @@ public class MeunAction {
     muen.setChildMenus(coursemMuens);
     muens.add(muen);
     muens.add(deptMuen);
+    muens.add(leaderMuen);
     ChildMenusBean adminMues = new ChildMenusBean();
     adminMues.setIcon("&#xe609");
     adminMues.setParentId("1");

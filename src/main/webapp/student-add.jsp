@@ -26,7 +26,7 @@
 
 	<title>新增学生</title>
 </head>
-<form id="form-member-add"  class="form form-horizontal"   enctype="multipart/form-data" onsubmit="return validate_form(this)">
+<form id="form-member-add" class="form form-horizontal"    enctype="multipart/form-data" onsubmit="return validate_form(this)">
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学生姓名：</label>
 		<div class="formControls col-xs-8 col-sm-9">
