@@ -14,7 +14,6 @@
        <result property="overDate" column="over_date"/>
        <result property="overDeptId" column="now_dept_id"/>
        <result property="state" column="state"/>
-
        <association property="overDept"  javaType="entity.Dept" column="now_dept_id">
            <id property="deptId" column="newId"/>
            <result property="deptName" column="newDepName"/>
@@ -40,7 +39,8 @@
          DELETE FROM employee WHERE  emp_id = #{empId}
     </delete>
     <select id="getall" resultMap="employeeMapper">
-        SELECT *  from employee e,dept d where e.enter_dept_id = d.dept_id AND e.now_dept_id = d.dept_id
+        SELECT e.*, enddept.dept_id as oldId, enddept.dept_name as oldDepName,overdept.dept_id as newId,overdept.dept_name as newDepName FROM employee e inner join dept enddept
+    ON e.enter_dept_id = enddept.dept_id JOIN dept overdept ON overdept.dept_id =e.now_dept_Id
     </select>
     <select id="findById" resultMap="employeeMapper" parameterType="string">
     SELECT e.*, enddept.dept_id as oldId, enddept.dept_name as oldDepName,overdept.dept_id as newId,overdept.dept_name as newDepName FROM employee e inner join dept enddept

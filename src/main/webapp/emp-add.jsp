@@ -63,7 +63,7 @@
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">入职部门：</label>
-		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
 				 <select class="select" size="1"  name="enterDeptId" id="orgId">
 					 <option value="">请选择</option>
 					<c:forEach var="dept" items="${requestScope.deptList}">
@@ -77,7 +77,7 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>退休时间：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder=""name="overDate" onfocus="WdatePicker({'dateFmt':'yyyy-MM-dd'})">
+			<input type="text" class="input-text" value=""  placeholder="如果未退休,时间为空" name="overDate" onfocus="WdatePicker({'dateFmt':'HH:mm'})">
 		</div>
 	</div>
 	<div class="row cl">

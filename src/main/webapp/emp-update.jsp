@@ -25,9 +25,9 @@
 	<![endif]-->
 	<!--/meta 作为公共模版分离出去-->
 
-	<title>新增职工</title>
+	<title>编辑职工</title>
 </head>
-<form action="${pageContext.request.contextPath}/emp/update?empId=${employee.empId}" method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
+<form class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职工姓名：</label>
 		<div class="formControls col-xs-8 col-sm-9">
@@ -86,7 +86,7 @@
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>退休时间：</label>
 		<div class="formControls col-xs-8 col-sm-9">
 
-			<input type="text" class="input-text" value="<fmt:formatDate value="${employee.overDate}" pattern="yyyy-MM-dd"/>" placeholder=""name="overDate" onfocus="WdatePicker({'dateFmt':'yyyy-MM-dd'})">
+			<input type="text" class="input-text" value="<fmt:formatDate value="${employee.overDate}" pattern="yyyy-MM-dd"/>"   placeholder="如果未退休,时间为空"name="overDate" onfocus="WdatePicker({'dateFmt':'yyyy-MM-dd'})">
 		</div>
 	</div>
 	<div class="row cl">
@@ -134,5 +134,49 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $("#form-member-add").validate({
+        rules:{
+            name:{
+                required:false,
+                minlength:2,
+                maxlength:16
+            },
+            gender:{
+                required:true,
+            },
+            mobile:{
+                required:true,
+                isMobile:true,
+            },
+            email:{
+                required:true,
+                email:true,
+            },
+            uploadfile:{
+                required:true,
+            },
+
+        },
+        onkeyup:false,
+        focusCleanup:true,
+        success:"valid",
+        submitHandler:function(form){
+            $(form).ajaxSubmit({
+                type: 'post',
+                url: "${pageContext.request.contextPath}/emp/update?empId=${employee.empId}",
+                success: function(data){
+                    layer.msg('修改成功!',{icon:1,time:1000});
+                    parent.layer.close(index);
+                },
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+                    layer.msg('修改失败!',{icon:2,time:1000});
+                }
+            });
+
+        }
+    });
+</script>
+
 </body>
 </html>

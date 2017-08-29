@@ -36,11 +36,14 @@
         <property name="configLocation" value="classpath:mybatis.xml"/>
 
     </bean>
+
     <!--
     MapperScannerConfigurer：mapper的扫描器，将包下边的mapper接口自动创建代理对象，
     自动创建到spring容器中，bean的id是mapper的类名（首字母小写）
      -->
     <!-- 对dataSource 数据源进行事务管理 -->
+
+
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           p:dataSource-ref="comboPooledDataSourceID"/>
     <aop:aspectj-autoproxy proxy-target-class="true"/>

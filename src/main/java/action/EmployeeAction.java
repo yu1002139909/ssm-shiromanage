@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import service.DeptService;
 import service.EmployeeService;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -47,6 +49,7 @@ public class EmployeeAction {
      * @Date 2017/5/31
      * 新增职工
      */
+
     @RequestMapping(value = "emp/addUi")
     public  String addUi(Model model){
         List<Dept> deptList = deptService.getall();
@@ -66,8 +69,11 @@ public class EmployeeAction {
         String path="";
         System.out.println("文件上传");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date oDate = null;
+        if(!overDate.equals("")){
+             oDate = sdf.parse(overDate);
+        }
         Date eDate = sdf.parse(enterDate);
-        Date oDate = sdf.parse(overDate);
         if(!file.isEmpty()){
             //生成uuid作为文件名称
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
@@ -117,8 +123,11 @@ public class EmployeeAction {
         String path="";
         System.out.println("文件上传");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date oDate = null;
+        if(!overDate.equals("")){
+            oDate = sdf.parse(overDate);
+        }
         Date eDate = sdf.parse(enterDate);
-        Date oDate = sdf.parse(overDate);
         if(!file.isEmpty()){
             //生成uuid作为文件名称
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
@@ -136,6 +145,20 @@ public class EmployeeAction {
         System.out.println(employee);
         employeeService.update(employee);
         return "index";
+    }
+    @RequestMapping(value = "emp/exporExcel")
+    public void exporExcel(HttpServletResponse response)  {
+        System.out.println("就");
+        List<Employee> employeeList = employeeService.getall();
+        try {
+            //设置编码
+            response.setContentType("application/x-execl");
+            response.setHeader("Content-Disposition","attachement;filename="+new String("职工列表.xls".getBytes(),"ISO-8859-1"));
+            ServletOutputStream outputStream = response.getOutputStream();
+            employeeService.exportExcel(employeeList,outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

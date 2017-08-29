@@ -162,12 +162,26 @@ public class MeunAction {
       childmenus.setChildMenus(majorlist);
       coursemMuens.add(childmenus);
     }
-    muen.setChildMenus(coursemMuens);
+
+
+
+    ChildMenusBean childMenusBean = new ChildMenusBean();
+    childMenusBean.setIcon("&#xe62d");
+    childMenusBean.setParentId("");
+    childMenusBean.setUrl("");
+    childMenusBean.setName("校友系统");
+    childMenusBean.setChildMenus(coursemMuens);
+
+    //测试
+    List<ChildMenusBean> testMuen = new ArrayList<ChildMenusBean>();
+    testMuen.add(childMenusBean);
+
+    muen.setChildMenus(testMuen);
     muens.add(muen);
     muens.add(deptMuen);
     muens.add(leaderMuen);
     ChildMenusBean adminMues = new ChildMenusBean();
-    adminMues.setIcon("&#xe609");
+    adminMues.setIcon("&#xe62d");
     adminMues.setParentId("1");
     adminMues.setName("管理员列表");
     adminMues.setUrl("user/userlist");

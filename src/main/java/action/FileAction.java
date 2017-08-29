@@ -1,6 +1,10 @@
 package action;
 
+import entity.Picture;
+import mapper.PictureMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -11,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @Author qq_emial1002139909@qq.com
@@ -18,6 +23,18 @@ import java.util.Iterator;
  */
 @Controller
 public class FileAction {
+    @Autowired
+    PictureMapper pictureMapper;
+
+
+    //获取所有图片
+    @RequestMapping(value = "pic/getAll")
+    public String getAll(Model model){
+        List<Picture> pictureList = pictureMapper.getall();
+        model.addAttribute("pictureList",pictureList);
+        return "picture-show";
+    }
+
     @RequestMapping(value = "/upload2")
     public String upload2(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException, IOException {
         //创建一个通用的多部分解析器
@@ -41,12 +58,15 @@ public class FileAction {
                     String myFileName = file.getOriginalFilename();
                     //如果名称不为“”,说明该文件存在，否则说明该文件不存在
                     if(myFileName.trim() !=""){
+                        Picture picture = new Picture();
                         System.out.println(myFileName);
                         //重命名上传后的文件名
                         String fileName = "demoUpload" + file.getOriginalFilename();
                         //定义上传路径
                          path = "/static/images/" + fileName;
                          file.transferTo(new File(pathRoot+path));
+                         picture.setSrc(path);
+                         pictureMapper.add(picture);
                         System.out.println("上传成功");
                     }
                 }

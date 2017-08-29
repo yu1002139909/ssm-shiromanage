@@ -2,6 +2,7 @@ package service;
 
 import entity.Employee;
 
+import javax.servlet.ServletOutputStream;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ public interface EmployeeService {
     public void update(Employee employee);
     public Employee findById(String employeeId);
     public List<Employee> findbyEmployeeByDepeId(String deptId);
+
+    void exportExcel(List<Employee> employeeList, ServletOutputStream outputStream);
 }

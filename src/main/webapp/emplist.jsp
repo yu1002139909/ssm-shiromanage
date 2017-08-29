@@ -27,15 +27,14 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="text-c"> 日期范围：
-		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入学生名"  name="">
+	<div class="text-c">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入职工姓名"  name="">
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加职工','${pageContext.request.contextPath}/emp/addUi','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加职工</a></span> <span class="r">共有数据：<strong>${requestScope.num}</strong> 条</span> </div>
-	<div class="mt-20">
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加职工','${pageContext.request.contextPath}/emp/addUi','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600; </i> 添加职工</a> &nbsp;</span>
+		<a href="javascript:;" onclick="doExportExcel" class="btn btn-success radius"><i class="Hui-iconfont">&#xe645;</i>批量导入</a></span>
+		<a href="${pageContext.request.contextPath}/emp/exporExcel" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe640;</i>批量导出</a></span>
+		<div class="mt-20">
 		<table class="table table-border table-bordered table-hover table-bg table-sort" id = "tb1">
 			<thead>
 			<tr class="text-c">
@@ -59,13 +58,16 @@
 					<td>${varSta.count}</td>
 					<td id="name">${emp.empName}</td>
 					<td id="empGrade">${emp.empGrade}</td>
-					<td id="photo"><img src="${pageContext.request.contextPath}/${emp.photo}" width="40px" height="40px"></td>
+					<td id="photo">
+						<a href="javascript:;" onClick="picture_edit('图库编辑','${pageContext.request.contextPath}/pic/getAll','10001')">
+						<img src="${pageContext.request.contextPath}/${emp.photo}" width="40px" height="40px"></td>
 					<td>
 						<fmt:formatDate value="${emp.enterDate}" pattern="yyyy年MM月dd日"/></td>
 					<td id="enterDept">${emp.enterDept.deptName}</td>
 					<td id="overDept">${emp.overDept.deptName}</td>
 					<td>
-						<fmt:formatDate value="${emp.overDate}" pattern="yyyy年MM月dd日"/></td>
+						<fmt:formatDate value="${emp.overDate}" pattern="yyyy年MM月dd日"/>
+					</td>
 						<td class="td-status"><span class="label label-success radius">${emp.state}</span></td>
 					<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="${pageContext.request.contextPath}/emp/updateUi?id=${emp.empId}" onclick="member_edit(member_edit('编辑','','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="change_password('修改密码','change-password.html','10001','600','270')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this,'${emp.empId}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				</tr>
@@ -76,16 +78,15 @@
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/h-ui.admin/js/H-ui.admin.js"></script>
-<!--/_footer 作为公共模版分离出去-->
+	<!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript">
+
+	<script type="text/javascript">
     $(function(){
         $('.table-sort').dataTable({
             "aaSorting": [[ 1, "desc" ]],//默认第几个排序
@@ -110,6 +111,10 @@
             layer_show(title,'${pageContext.request.contextPath}/student/updateUi?grade_id='+id,w,h);
         }
     }
+    //导出用户列表
+    function doExportExcel(){
+        window.open("${pageContext.request.contextPath}/emp/exporExcel");
+    }
 	/*密码-修改*/
     function change_password(title,url,id,w,h){
         layer_show(title,url,w,h);
@@ -130,6 +135,15 @@
                 },
             });
         });
+    }
+    /*图片编辑*/
+    function picture_edit(title,url,id){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
     }
 </script>
 </body>

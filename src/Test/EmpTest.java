@@ -43,9 +43,9 @@ public class EmpTest  {
     @Test
     public void  getall(){
         List<Employee> employeeList = employeeMapper.getall();
-      for (Employee  employee: employeeList){
-          System.out.println(employee.getOverDept().getDeptName());
-      }
+        for (int i = 0;i<employeeList.size();i++){
+            System.out.println(employeeList.get(i).getEmpName());
+        }
     }
     /*@author yu
      * @version 1.0

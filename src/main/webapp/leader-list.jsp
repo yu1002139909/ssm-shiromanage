@@ -20,7 +20,8 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/lib/Hui-iconfont/1.0.8/iconfont.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/h-ui.admin/css/style.css" />
-
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/common/css/style.css" />
+	<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
 	<!--[if IE 6]>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -38,7 +39,7 @@
 		<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加领导','${pageContext.request.contextPath}/leader-add.jsp','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加领导</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-	<table class="table table-border table-bordered table-bg">
+	<!--<table class="table table-border table-bordered table-bg">
 		<thead>
 			<tr>
 				<th scope="col" colspan="9">领导列表</th>
@@ -64,11 +65,31 @@
 					<td class="td-status"><span class="label label-success radius">${leader.state}</span></td>
 					<td class="td-manage"><a style="text-decoration:none" onClick="admin_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="${pageContext.request.contextPath}/leader/updateUi?id=${leader.id}" onclick="admin_edit('管理员编辑','admin-add.jsp','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				</tr>
+
 			</c:forEach>
 		</thead>
 
 		</tbody>
-	</table>
+	</table> -->
+	<c:forEach  var="leader" items="${requestScope.leaderList}" varStatus="varSta">
+	<div class="bloger-grid">
+		<div class="blog-img">
+			<img src="${pageContext.request.contextPath}/${leader.photo}" title="img6" />
+		</div>
+		<div class="bloger-content">
+			<h5>${leader.name}</h5>
+			<p>
+					${leader.synopsis}
+			</p>
+			<ul>
+				<li><a href="#">入职时间</a></li>
+				<li><a href="#">: 23-02-1989</a></li>
+				<li><a href="${pageContext.request.contextPath}/leader/updateUi?id=${leader.id}"><span>详细信息</span></a></li>
+			</ul>
+		</div>
+		<div class="clear"> </div>
+	</div>
+	</c:forEach>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery/1.9.1/jquery.min.js"></script>

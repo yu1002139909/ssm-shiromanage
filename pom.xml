@@ -255,6 +255,17 @@
       <version>0.9.1.2</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.16</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.16</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
     <dependency>
       <groupId>commons-logging</groupId>
@@ -311,6 +322,7 @@
         <configuration>
           <url>http://192.168.43.109</url>
           <server>tomcat7</server>
+          <port>8082</port>
           <path>/studentmanage</path>
           <update>true</update>
           <warFile>MavenDemo.war</warFile>
