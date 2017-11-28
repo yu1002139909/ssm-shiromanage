@@ -31,7 +31,7 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="输入职工姓名"  name="">
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加职工','${pageContext.request.contextPath}/emp/addUi','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600; </i> 添加职工</a> &nbsp;</span>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="batch(this)" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加职工','${pageContext.request.contextPath}/emp/addUi','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600; </i> 添加职工</a> &nbsp;</span>
 		<a href="javascript:;" onclick="doExportExcel" class="btn btn-success radius"><i class="Hui-iconfont">&#xe645;</i>批量导入</a></span>
 		<a href="${pageContext.request.contextPath}/emp/exporExcel" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe640;</i>批量导出</a></span>
 		<div class="mt-20">
@@ -54,7 +54,7 @@
 			<tbody>
 			<c:forEach  var="emp" items="${requestScope.employeeList}"  varStatus="varSta">
 				<tr class="text-c">
-					<td><input type="checkbox" value="1" name=""></td>
+					<td><input type="checkbox" value="${emp.empId}" name="empid"></td>
 					<td>${varSta.count}</td>
 					<td id="name">${emp.empName}</td>
 					<td id="empGrade">${emp.empGrade}</td>
@@ -80,6 +80,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/h-ui.admin/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/layer/2.4/layer.js"></script>
+
 	<!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
@@ -118,6 +120,44 @@
 	/*密码-修改*/
     function change_password(title,url,id,w,h){
         layer_show(title,url,w,h);
+    }
+
+    /*批量-删除*/
+    function batch(obj) {
+
+        var s='';
+        $('input[name="empid"]:checked').each(function(){
+            s+=$(this).val()+',';
+        });
+
+
+    if (s.length > 0) {
+    //得到选中的checkbox值序列
+          s = s.substring(0,s.length - 1);
+          var empid = {};
+          empid.num = s;
+          layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                 type: 'Post',
+				 data:empid,
+                 url: '${pageContext.request.contextPath}/emp/batchdelete',
+                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                 success: function(data){
+                     $(obj).parents("tr").remove();
+                    layer.msg('已删除!',{icon:1,time:1000});
+                },
+                  error: function (XMLHttpRequest, textStatus, errorThrown) {
+                      alert("请求对象XMLHttpRequest: "+XMLHttpRequest);
+                      alert("错误类型textStatus: "+textStatus);
+                      alert("异常对象errorThrown: "+errorThrown);
+                 }
+              });
+              layer.close(index);
+        });
+	}
+      else {
+        layer.msg('你还没有选择任何记录!',{icon:0,time:1000});
+	}
     }
 	/*用户-删除*/
     function member_del(obj,id){

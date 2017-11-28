@@ -104,7 +104,6 @@ public class EmployeeAction {
     @RequestMapping(value = "emp/updateUi")
     public String updateUi(Model model,String id){
         Employee employee = employeeService.findById(id);
-        System.out.println(employee.getEmpId());
         List<Dept> deptList = deptService.getall();
         model.addAttribute("deptList",deptList);
         model.addAttribute("employee",employee);
@@ -121,7 +120,6 @@ public class EmployeeAction {
         //获取webapp的物理路劲
         String pathRoot = request.getSession().getServletContext().getRealPath("");
         String path="";
-        System.out.println("文件上传");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date oDate = null;
         if(!overDate.equals("")){
@@ -145,10 +143,9 @@ public class EmployeeAction {
         System.out.println(employee);
         employeeService.update(employee);
         return "index";
-    }
+      }
     @RequestMapping(value = "emp/exporExcel")
     public void exporExcel(HttpServletResponse response)  {
-        System.out.println("就");
         List<Employee> employeeList = employeeService.getall();
         try {
             //设置编码
@@ -159,6 +156,16 @@ public class EmployeeAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    @RequestMapping(value = "emp/batchdelete",method = RequestMethod.POST)
+    public String batchdelete(String num){
+        System.out.println("ss ");
+      //处理字符串
+      String[] emplistid = num.split(",");
+       for (int i  = 0;i<emplistid.length;i++){
+          employeeService.delete(emplistid[i]);
+      }
+      return "test";
     }
 }
 

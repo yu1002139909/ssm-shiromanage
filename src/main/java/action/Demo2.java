@@ -5,4 +5,7 @@ package action;
  * @Date 2017/5/30 15:38
  */
 public class Demo2 {
+    public static void main(String[] args) {
+
+    }
 }

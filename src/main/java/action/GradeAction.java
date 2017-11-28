@@ -87,7 +87,6 @@ public class GradeAction {
                 taskMap.put("major_id", major.getMajor_id());
                 taskMap.put("major_name", major.getMajor_name());
                 list.add(taskMap);
-                System.out.println(list.size());
             }
         }
         jsonMap.put("tasks", list);

@@ -34,8 +34,6 @@ public class MeunAction {
 
   @RequestMapping(value = "test.action")
     public String test(HttpServletResponse response, String major_name) throws Exception {
-      System.out.println("ajax请求");
-      System.out.println(major_name);
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       String string = sdf.format(new Date());
       response.setContentType("text/html;charset=UTF-8");

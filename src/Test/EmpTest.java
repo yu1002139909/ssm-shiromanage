@@ -24,16 +24,19 @@ public class EmpTest  {
      */
     @Test
     public void add(){
-        Employee employee = new Employee();
-        employee.setOverDeptId("47f4b17b935f1035993062d817e7418e");
-        employee.setState("在职");
-        employee.setPhoto("");
-        employee.setEnterDeptId("47f4b17b935f1035993062d817e7418e");
-        employee.setOverDate(new Date());
-        employee.setEmpName("张三"+221);
-        employee.setEnterDate(new Date());
-        employee.setEmpGrade("男");
-        employeeMapper.add(employee);
+
+        for (int i =0;i<=1000;i++){
+            Employee employee = new Employee();
+            employee.setOverDeptId("47f4b17b935f1035993062d817e7418e");
+            employee.setState("在职");
+            employee.setPhoto("");
+            employee.setEnterDeptId("47f4b17b935f1035993062d817e7418e");
+            employee.setOverDate(new Date());
+            employee.setEmpName("张三"+i);
+            employee.setEnterDate(new Date());
+            employee.setEmpGrade("男");
+            employeeMapper.add(employee);
+        }
     }
     /*@author yu
      * @version 1.0

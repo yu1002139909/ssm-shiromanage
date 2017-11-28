@@ -4,9 +4,13 @@ import entity.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import service.CourseService;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,6 +45,11 @@ public class CourseAction {
         courseService.delete(id);
         System.out.println("删除成功");
         return"forward:/courselist.action";
+    }
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/getdata")
+    protected void getdata(@RequestBody String data) throws IOException {
+        System.out.println(data);
     }
     //修改学院信息Ui
     @RequestMapping("/course/updateUi")
