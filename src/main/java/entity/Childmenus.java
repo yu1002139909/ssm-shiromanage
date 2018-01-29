@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Auto-generated: 2017-05-18 20:48:30
- *
+ *11111
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
