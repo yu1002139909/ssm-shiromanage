@@ -1,82 +1,56 @@
 <%--
   Created by IntelliJ IDEA.
   User: yuyu
-  Date: 2017/7/31
-  Time: 11:16
+  Date: 2018/2/8
+  Time: 9:00
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <meta name="keywords" content="scclui框架">
-    <meta name="description" content="scclui为轻量级的网站后台管理系统模版。">
-    <title>首页</title>
-
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/common/css/sccl.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/common/skin/qingxin/skin.css" id="layout-skin"/>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #allmap{height:500px;width:100%;}
+        #r-result{width:100%; font-size:14px;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=HyletaniKAZlSzMhT0bOCZFP1m1K7ZfZ"></script>
+    <title>城市名定位</title>
 </head>
-
 <body>
-<div class="layout-admin">
-    <header class="layout-header">
-        <span class="header-logo">系统框架</span>
-        <a class="header-menu-btn" href="javascript:;"><i class="icon-font">&#xe600;</i></a>
-        <ul class="header-bar">
-            <li class="header-bar-role"><a href="javascript:;">超级管理员</a></li>
-            <li class="header-bar-nav">
-                <a href="javascript:;">admin<i class="icon-font" style="margin-left:5px;">&#xe60c;</i></a>
-                <ul class="header-dropdown-menu">
-                    <li><a href="javascript:;">个人信息</a></li>
-                    <li><a href="javascript:;">切换账户</a></li>
-                    <li><a href="javascript:;">退出</a></li>
-                </ul>
-            </li>
-            <li class="header-bar-nav">
-                <a href="javascript:;" title="换肤"><i class="icon-font">&#xe608;</i></a>
-                <ul class="header-dropdown-menu right dropdown-skin">
-                    <li><a href="javascript:;" data-val="qingxin" title="清新">清新</a></li>
-                    <li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
-                    <li><a href="javascript:;" data-val="molv" title="墨绿">墨绿</a></li>
-
-                </ul>
-            </li>
-        </ul>
-    </header>
-    <aside class="layout-side">
-        <ul class="side-menu">
-
-        </ul>
-    </aside>
-
-    <div class="layout-side-arrow"><div class="layout-side-arrow-icon"><i class="icon-font">&#xe60d;</i></div></div>
-
-    <section class="layout-main">
-        <div class="layout-main-tab">
-            <button class="tab-btn btn-left"><i class="icon-font">&#xe60e;</i></button>
-            <nav class="tab-nav">
-                <div class="tab-nav-content">
-                    <a href="javascript:;" class="content-tab active" data-id="home.html">首页</a>
-                </div>
-            </nav>
-            <button class="tab-btn btn-right"><i class="icon-font">&#xe60f;</i></button>
-        </div>
-        <div class="layout-main-body">
-            <iframe class="body-iframe" name="iframe0" width="100%" height="99%" src="home.html" frameborder="0" data-id="home.html" seamless></iframe>
-        </div>
-    </section>
-    <div class="layout-footer">@2016 0.1 www.mycodes.net</div>
+<div id="allmap"></div>
+<div id="r-result">
+    地址: <input id="cityName" type="text" style="width:100px; margin-right:10px;" />
+    <input type="button" value="查询" onclick="theLocation()" />
+    经度:<input type="text" id="jd"/>纬度<input type="text" id="wd"/>
 </div>
-<script type="text/javascript" src="../common/lib/jquery-1.9.0.min.js"></script>
-<script type="text/javascript" src="../common/js/sccl.js"></script>
-
 </body>
 </html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(116.331398,39.897445);
+    map.centerAndZoom('广州',11);
+    map.addEventListener("click",function(e){
+        var input =  document.getElementById('wd');
+        var input2 =  document.getElementById('jd');
+        input.value = e.point.lng;
+        input2.value= e.point.lat;
 
-</html>
+    });
+
+
+    map.addControl(new BMap.NavigationControl());
+
+
+    var local = new BMap.LocalSearch(map, {
+        renderOptions:{map: map}
+    });
+    function theLocation(){
+        var city = document.getElementById("cityName").value;
+        if(city != ""){
+            local.search(city);
+        }
+    }
+</script>

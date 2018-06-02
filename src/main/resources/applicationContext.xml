@@ -26,7 +26,7 @@
     <!-- 配置C3P0连接池(即管理数据库连接) -->
     <bean id="comboPooledDataSourceID" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/ssmdemo"/>
+        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/lv"/>
         <property name="user" value="root"/>
         <property name="password" value="root"/>
     </bean>
@@ -34,7 +34,18 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="comboPooledDataSourceID"/>
         <property name="configLocation" value="classpath:mybatis.xml"/>
-
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!-- config params as the following -->
+                        <value>
+                            helperDialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!--

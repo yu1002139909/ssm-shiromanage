@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.ActicleMapper">
+	<resultMap type="entity.Acticle" id="img">
+		<id property="id" column="id"/>
+		<result property="user_id" column="user_id"/>
+		<result property="star" column="star"/>
+		<result property="date" column="date"/>
+		<result property="address" column="address"/>
+		<result property="conten" column="conten"/>
+		<result property="title" column="title"/>
+		<result property="forword" column="forword"/>
+		<result property="state" column="state"/>
+		<result property="starstate" column="starstate"/>
+		<result property="jd" column="jd"/>
+		<result property="wd" column="wd"/>
+
+	</resultMap>
+	<insert id="add"  parameterType="entity.Acticle">
+		INSERT  INTO article (id,date, title, user_id, conten, address, star,state,forword,jd,wd) VALUES
+		(#{id},#{date},#{title},#{user_id},#{conten},#{address},#{star},#{state},#{forword},#{jd},#{wd})
+	</insert>
+	<update id="updateState" parameterType="java.math.BigInteger">
+
+		UPDATE  article SET  state = 1 where id = #{id}
+
+	</update>
+	<select id="startamx" resultType="entity.Acticle">
+			SELECT *from article order BY star DESC limit 0,1
+	</select>
+	<delete id="delele" parameterType="java.math.BigInteger">
+		DELETE FROM  article where id = #{id}
+	</delete>
+	<select id="update" parameterType="entity.Acticle">
+		UPDATE article SET date=#{date},title =#{title},user_id=#{user_id},conten=#{conten},
+		address=#{address},jd=#{jd},wd=#{id},star=#{star}  where id= #{id}
+	</select>
+	<select id="getAll" resultType="entity.Acticle" >
+		SELECT * FROM  article
+	</select>
+	<select id="startnum" resultType="entity.Acticle">
+		SELECT *from article order BY star DESC limit 0,4
+	</select>
+	<select id="findById" resultType="entity.Acticle">
+
+		SELECT *FROM  article where id = #{id}
+
+	</select>
+	<select id="findByUserId" resultType="entity.Acticle">
+
+		SELECT *from article where user_id = #{id} order by date desc limit 0,5;
+
+	</select>
+	<select id="findByUserIdForword" resultType="entity.Acticle" parameterType="entity.Acticle">
+		SELECT *from article where userid =#{id} and state = #{state}
+	</select>
+	<select id="selectActicle" resultType="entity.Acticle" parameterType="java.lang.String">
+      select * from article where title LIKE '%${title}%';
+	</select>
+	<select id="forwardList" resultType="entity.Acticle">
+		SELECT  *from article where user_id =#{id} and forword = 1
+	</select>
+    <select id="getMyAll" resultType="entity.Acticle">
+		SELECT  *from article where user_id =#{id}
+
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+

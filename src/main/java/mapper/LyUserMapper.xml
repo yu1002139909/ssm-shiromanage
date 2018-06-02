@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.LyUserMapper">
+	<resultMap type="entity.LyUser" id="lyuser">
+		<id property="id" column="id"/>
+		<result property="userName" column="username"/>
+		<result property="password" column="password"/>
+		<result property="address" column="address"/>
+		<result property="email" column="email"/>
+		<result property="gender" column="gender"/>
+		<result property="name" column="name"/>
+		<result property="age" column="age"/>
+		<result property="role" column="role"/>
+		<result property="date" column="date"/>
+		<result property="phone" column="phone"/>
+		<result property="state" column="state"/>
+
+	</resultMap>
+	<insert id="add" parameterType="entity.LyUser">
+		INSERT  INTO lv_user(id,username, password, address, email, gender, name, age,role,date,phone,state) VALUES
+		(#{id},#{userName},#{password},#{address},#{email},#{gender},#{name},#{age},#{role},#{date},#{phone},#{state})
+	</insert>
+	<update id="addUserRole" parameterType="entity.LyUser">
+		UPDATE lv_user set role = #{role} where id = #{id}
+	</update>
+	<update id="update" parameterType="entity.LyUser">
+		UPDATE lv_user SET  password =#{password},address=#{address},email=#{email},
+		gender = #{gender},name=#{name},age=#{age},role=#{role},phone=#{phone},state=#{state} where id = #{id}
+	</update>
+	<update id="updateUserState" parameterType="entity.LyUser">
+
+		UPDATE lv_user SET state = #{state} where id = #{id}
+	</update>
+	<select id="AdminList" resultType="entity.LyUser">
+		SELECT *from lv_user where role = 'admin'
+
+	</select>
+	<select id="authentication" parameterType="entity.LyUser" resultType="entity.LyUser">
+		SELECT  *from lv_user where  username = #{userName} and password = #{password} and state != '失效'
+	</select>
+
+    <select id="getAll" resultType="entity.LyUser" >
+		SELECT *FROM  lv_user
+	</select>
+
+	<select id="delete" parameterType="java.math.BigInteger">
+
+		DELETE FROM lv_user where id = #{id}
+
+	</select>
+	<select id="findById" parameterType="java.math.BigInteger" resultType="entity.LyUser">
+		SELECT  *FROM lv_user WHERE id = #{id}
+	</select>
+	<select id="findByUserName" resultType="entity.LyUser">
+
+		SELECT *FROM  lv_user where username = #{userName}
+
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
 /* -----------H-ui前端框架-------------
-* H-ui.admin.js 3.0
+* H-ui.admin.js v3.1
 * http://www.h-ui.net/
 * Created & Modified by guojunhui
 * Date modified 2017.02.03
@@ -26,14 +26,14 @@ function tabNavallwidth(){
 		$tabNavmore.show()}
 	else{
 		$tabNavmore.hide();
-		$tabNav.css({left:0})
+		$tabNav.css({left:0});
 	}
 }
 
 /*左侧菜单响应式*/
 function Huiasidedisplay(){
 	if($(window).width()>=768){
-		$(".Hui-aside").show()
+		$(".Hui-aside").show();
 	} 
 }
 /*获取皮肤cookie*/
@@ -187,7 +187,7 @@ function layer_show(title,url,w,h){
 		title=false;
 	};
 	if (url == null || url == '') {
-		url="500.jsp";
+		url="404.html";
 	};
 	if (w == null || w == '') {
 		w=800;
@@ -254,7 +254,10 @@ $(function(){
 		}
 	});
 	/*左侧菜单*/
-	$.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");
+	$(".Hui-aside").Huifold({
+		titCell:'.menu_dropdown dl dt',
+		mainCell:'.menu_dropdown dl dd',
+	});
 	
 	/*选项卡导航*/
 	$(".Hui-aside").on("click",".menu_dropdown a",function(){

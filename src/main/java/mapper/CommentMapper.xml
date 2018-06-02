@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.CommentMapper">
+	<resultMap type="entity.Comment" id="comment">
+		<id property="id" column="id"/>
+		<result property="user_id" column="user_id"/>
+		<result property="date" column="date"/>
+		<result property="content" column="conten"/>
+		<result property="artcle_id" column="artcle_id"/>
+	</resultMap>
+	<insert id="add"  parameterType="entity.Comment">
+		 INSERT  into comment (id, user_id, artcle_id, content,date) VALUES
+		 (#{id},#{user_id},#{artcle_id},#{content},#{date}	)
+	</insert>
+	<delete id="delete" parameterType="java.math.BigInteger">
+		DELETE FROM  comment where id = #{id}
+	</delete>
+	<select id="update" parameterType="entity.Acticle">
+		UPDATE comment SET content=#{content}
+		 where id= #{id}
+	</select>
+	<select id="getAll" resultType="entity.Comment" >
+		SELECT *  FROM  comment
+	</select>
+	<select id="findByActicleId" resultType="entity.Comment">
+		SELECT *from comment where artcle_id = #{id}
+	</select>
+    <select id="findByUserComment" resultType="entity.Comment">
+		SELECT *from comment where user_id = #{id}
+	</select>
+	<select id="findById" resultType="entity.Comment">
+		SELECT *FROM  comment where id = #{id}
+
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+

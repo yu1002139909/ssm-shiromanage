@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.ShareMapper">
+	<resultMap type="entity.Share" id="share">
+		<id property="id" column="id"/>
+		<result property="user_id" column="user_id"/>
+		<result property="acticle_id" column="acticle_id"/>
+	</resultMap>
+	<insert id="addShare" parameterType="entity.Share">
+
+		INSERT  into share (acticle_id, user_id) VALUES
+		(#{acticle_id},#{user_id})
+
+	</insert>
+	<delete id="delete" parameterType="entity.Share">
+
+		DELETE FROM share where id = #{id}
+
+	</delete>
+	<select id="getUserAll" resultType="entity.Share">
+		SELECT  *from share where user_id = #{user_id} and acticle_id = #{acticle_id};
+	</select>
+	<select id="getAll" resultType="entity.Share">
+		SELECT  *FROM  share where user_id = #{user_id}
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+

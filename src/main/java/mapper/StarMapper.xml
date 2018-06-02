@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.StarMapper">
+	<resultMap type="entity.Star" id="star">
+		<id property="id" column="id"/>
+		<result property="user_id" column="user_id"/>
+		<result property="acticle_id" column="acticle_id"/>
+	</resultMap>
+	<insert id="add" parameterType="entity.Star">
+
+		INSERT  into star (acticle_id, user_id) VALUES
+		(#{acticle_id},#{user_id})
+
+	</insert>
+	<delete id="delete" parameterType="entity.Star">
+
+		DELETE FROM star where id = #{id}
+
+	</delete>
+	<select id="getUserStar" resultType="entity.Star">
+		SELECT  *from star where user_id = #{user_id} and acticle_id = #{acticle_id};
+	</select>
+	<select id="getAll" resultType="entity.Star">
+		SELECT  *FROM  star where user_id = #{user_id}
+	</select>
+
+	<select id="findByActicleId" resultType="entity.Star"  parameterType="java.math.BigInteger">
+
+				SELECT  *FROM  star where acticle_id = #{ActicleId}
+
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.ImgMapper">
+	<resultMap type="entity.Img" id="img">
+		<id property="id" column="id"/>
+		<result property="user_id" column="url"/>
+		<result property="star" column="star"/>
+		<result property="date" column="date"/>
+		<result property="acticle_id" column="article_id"/>
+	</resultMap>
+	<insert id="add">
+		INSERT  INTO  img ( id,user_id, star, date, url,article_id) VALUES (#{id},#{user_id},#{star},#{date},#{url},#{acticle_id})
+	</insert>
+    <delete id="delele" parameterType="java.math.BigInteger">
+		DELETE  from img where id =#{id}
+	</delete>
+
+    <select id="getAll" resultType="entity.Img" >
+		SELECT * FROM  img
+	</select>
+	<select id="findById" resultType="entity.Img">
+
+		SELECT *from img where article_id = #{id}
+	</select>
+	<select id="starnum" resultType="entity.Img">
+		SELECT *from img order BY star DESC limit 0,4
+	</select>
+	<select id="imglist" resultType="entity.Img">
+
+	  SELECT *from img order BY star DESC limit 0,6
+
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+

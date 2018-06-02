@@ -9,21 +9,28 @@
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/page/login"/>
+        <property name="loginUrl" value="/login.jsp"/>
         <property name="successUrl" value="/index.jsp"/>
         <property name="unauthorizedUrl" value="/404.html"/>
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源允许访问 -->
-                /common/**=anon
+                /css/**=anon
                 /image/** = anon
                 /lib/** = anon
                 /static/** = anon
                 /temp/** = anon
+                /layui-v2.2.5/** =anon
                 <!-- 登录页允许访问 -->
                 /user/login =anon
+                /member-add.jsp=anon
+                /useradd=anon
+                /indexui=anon
+                /indexui.jsp=anon
+                /activle/**=anon
+
                 <!-- 其他资源需要认证 -->
-                /** = anon
+                /** = authc
             </value>
         </property>
     </bean>
